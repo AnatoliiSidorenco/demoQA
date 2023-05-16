@@ -1,5 +1,6 @@
 package api;
 
+import api.endpoint.Endpoint;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
@@ -7,29 +8,30 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
 public class ApiBase {
-// todo - создаю переменную как в Postmann,что б потом переедать их в автоматических настройках разово
-    final String BASE_URI = "http://phonebook.telran-edu.de:8080/";
-    final String API_KEY = "eyJhbGciOiJIUzUxMiJ9.eyJ1c2VybmFtZSI6InRlc3RAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9VU0VSIl0sImV4cCI6MjEwNjk3ODI5Nn0.GM1wsoRV2QoAsD6wKmIk7N49DDpuCejK4BC9H9YItJvesH5vft8HO2uqTPnGQJwJ5oXKS2OILqP1yoanMnIMkA";
+    // todo - создаю переменную как в Postmann,что б потом переедать их в автоматических настройках разово
+    final String BASE_URI = "https://demoqa.com/login";
+    final String API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6IlRvbGlrIiwicGFzc3dvcmQiOiJTaWRvcmVua28xMjMkIiwiaWF0IjoxNjgzNTQ3MTI1fQ.PA0v4ytKZC_JdpkC6vSGDIRQZ6YAqzMuMyQJAscvJGM";
 
     RequestSpecification specification = new RequestSpecBuilder()
             .setBaseUri(BASE_URI)
             .setContentType(ContentType.JSON)
-            .addHeader("Access-Token", API_KEY)
+            .addHeader("Authorization", API_KEY)  // обращать внимание, что написано в сваггере в авторизации "Authorization" -
+                                                            // там может быть другое имя например  "Access-Token"
             .build();
 
-    public Response getRequest(String endPoint, Integer responseCode) {
+    public Response getRequest(Endpoint endPoint, Integer responseCode) {
         Response response = RestAssured.given()
                 .spec(specification)
                 .when()
                 .log().all()
-                .get(endPoint)
+                .get(String.valueOf(endPoint))
                 .then().log().all()
                 .extract().response();
         response.then().assertThat().statusCode(responseCode);
         return response;
     }
 
-    public Response getRequestWithParam(String endPoint, Integer responseCode,String paramName, int id) {
+    public Response getRequestWithParam(String endPoint, Integer responseCode, String paramName, int id) {
         Response response = RestAssured.given()
                 .spec(specification)
                 .pathParam(paramName, id)
@@ -67,6 +69,7 @@ public class ApiBase {
         response.then().assertThat().statusCode(responseCode);
         return response;
     }
+
     public Response deleteRequest(String endPoint, Integer responseCode, int id) {
         Response response = RestAssured.given()
                 .spec(specification)
