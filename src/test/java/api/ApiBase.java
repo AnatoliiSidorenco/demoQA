@@ -1,16 +1,17 @@
 package api;
 
-import api.endpoint.Endpoint;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
+import java.util.UUID;
+
 public class ApiBase {
     // todo - создаю переменную как в Postmann,что б потом переедать их в автоматических настройках разово
-    final String BASE_URI = "https://demoqa.com/login";
-    final String API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6IlRvbGlrIiwicGFzc3dvcmQiOiJTaWRvcmVua28xMjMkIiwiaWF0IjoxNjgzNTQ3MTI1fQ.PA0v4ytKZC_JdpkC6vSGDIRQZ6YAqzMuMyQJAscvJGM";
+    final String BASE_URI = "https://demoqa.com";
+    final String API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6IlRvbGlrIiwicGFzc3dvcmQiOiJTaWRvcmVua28xMjMkIiwiaWF0IjoxNjg0MzEyNDk3fQ.amyQ3qjxtBgVRoANYRsv5hwcKGtNMCyHbPWUxlpyVXM";
 
     RequestSpecification specification = new RequestSpecBuilder()
             .setBaseUri(BASE_URI)
@@ -19,19 +20,19 @@ public class ApiBase {
                                                             // там может быть другое имя например  "Access-Token"
             .build();
 
-    public Response getRequest(Endpoint endPoint, Integer responseCode) {
+    public Response getRequest(String endPoint, Integer responseCode) {
         Response response = RestAssured.given()
                 .spec(specification)
                 .when()
                 .log().all()
-                .get(String.valueOf(endPoint))
+                .get(endPoint)
                 .then().log().all()
                 .extract().response();
         response.then().assertThat().statusCode(responseCode);
         return response;
     }
 
-    public Response getRequestWithParam(String endPoint, Integer responseCode, String paramName, int id) {
+    public Response getRequestWithParam(String endPoint, Integer responseCode, String paramName, String id) {
         Response response = RestAssured.given()
                 .spec(specification)
                 .pathParam(paramName, id)
@@ -70,7 +71,7 @@ public class ApiBase {
         return response;
     }
 
-    public Response deleteRequest(String endPoint, Integer responseCode, int id) {
+    public Response deleteRequest(String endPoint, Integer responseCode, String id) {
         Response response = RestAssured.given()
                 .spec(specification)
                 .pathParam("id", id)
@@ -82,5 +83,6 @@ public class ApiBase {
         response.then().assertThat().statusCode(responseCode);
         return response;
     }
+
 
 }
