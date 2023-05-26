@@ -1,22 +1,16 @@
 package ui.pages.bookStorePage;
 
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import ui.pages.PageBase;
 import ui.wait.Wait;
 
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-
-import static java.lang.Thread.sleep;
-import static org.testng.AssertJUnit.assertTrue;
 
 public class BookStoreElements extends PageBase {
     public BookStoreElements(WebDriver driver) {
@@ -189,7 +183,7 @@ public class BookStoreElements extends PageBase {
         for (WebElement element : actualElements) {
             String elementText = element.getText();
             if (elementText.equals(bookName)) {
-              return  element;
+                return element;
             }
         }
 

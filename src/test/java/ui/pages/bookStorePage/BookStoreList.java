@@ -14,8 +14,8 @@ public class BookStoreList extends PageBase {
     public BookStoreList(WebDriver driver) {
         super(driver);
     }
-    Wait wait;
 
+    Wait wait;
 
 
     @FindBy(id = "searchBox")
@@ -156,44 +156,45 @@ public class BookStoreList extends PageBase {
     }
 
 
-
     public void waitForLoadingAuthorElement() {
         wait = new Wait(driver);
         wait.forVisibility(authorElement);
     }
+
     public void clickOnAuthor() {
         click(authorElement);
     }
-    public boolean checkSortAlphabeticallyForAuthor(){
+
+    public boolean checkSortAlphabeticallyForAuthor() {
         List<String> actualNames = new ArrayList<>();
 
-            actualNames.add(elementsOfFirstBook.get(2).getText());
-            actualNames.add(elementsOfSecondBook.get(2).getText());
-            actualNames.add(elementsOfThirdBook.get(2).getText());
-            actualNames.add(elementsOfFourthBook.get(2).getText());
-            actualNames.add(elementsOfFifthBook.get(2).getText());
-            actualNames.add(elementsOfSixthBook.get(2).getText());
-            actualNames.add(elementsOfSeventhBook.get(2).getText());
-            actualNames.add(elementsOfEighthBook.get(2).getText());
+        actualNames.add(elementsOfFirstBook.get(2).getText());
+        actualNames.add(elementsOfSecondBook.get(2).getText());
+        actualNames.add(elementsOfThirdBook.get(2).getText());
+        actualNames.add(elementsOfFourthBook.get(2).getText());
+        actualNames.add(elementsOfFifthBook.get(2).getText());
+        actualNames.add(elementsOfSixthBook.get(2).getText());
+        actualNames.add(elementsOfSeventhBook.get(2).getText());
+        actualNames.add(elementsOfEighthBook.get(2).getText());
 
 
         List<String> expectedNames = new ArrayList<>(actualNames);
         Collections.sort(expectedNames);
 
-        return   actualNames.equals(expectedNames);
+        return actualNames.equals(expectedNames);
     }
-
-
 
 
     public void waitForLoadingPublisherElement() {
         wait = new Wait(driver);
         wait.forVisibility(publisherElement);
     }
+
     public void clickOnPublisher() {
         click(publisherElement);
     }
-    public boolean checkSortAlphabeticallyForPublisher(){
+
+    public boolean checkSortAlphabeticallyForPublisher() {
         List<String> actualNames = new ArrayList<>();
 
         actualNames.add(elementsOfFirstBook.get(3).getText());
@@ -209,6 +210,6 @@ public class BookStoreList extends PageBase {
         List<String> expectedNames = new ArrayList<>(actualNames);
         Collections.sort(expectedNames);
 
-        return   actualNames.equals(expectedNames);
+        return actualNames.equals(expectedNames);
     }
 }
