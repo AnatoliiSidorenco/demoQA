@@ -1,5 +1,6 @@
 package ui.wait;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -23,7 +24,22 @@ public class Wait {
         wait = new WebDriverWait(driver, TIMEOUT);
         return wait;
     }
+    public Alert createAlert() {
+        WebDriverWait wait = setWait();
 
+        // Ожидаем появление Alert
+        wait.until(ExpectedConditions.alertIsPresent());
+
+        // Переключаемся на Alert
+        Alert alert = driver.switchTo().alert();
+
+        // Выполняем необходимые действия с Alert
+        // Например, принимаем его (нажимаем на кнопку OK)
+        alert.accept();
+
+        // Возвращаем объект Alert, если нужно использовать его дальше
+        return alert;
+    }
 
     public void forVisibility(WebElement element) {
         try {

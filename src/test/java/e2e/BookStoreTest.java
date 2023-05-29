@@ -8,6 +8,7 @@ import ui.pages.LoginPage;
 import ui.pages.ProfilePage;
 import ui.pages.bookStorePage.BookStoreElements;
 import ui.pages.bookStorePage.BookStoreList;
+import ui.wait.Wait;
 
 import static org.testng.AssertJUnit.assertTrue;
 
@@ -18,6 +19,7 @@ public class BookStoreTest extends TestBase {
     ProfilePage profilePage;
     BookStoreElements bookStoreElements;
     BookStoreList bookStoreList;
+    Wait wait;
 
 
     //todo-- Полный цикл Login - проверка - Logout  и  прверка видимости и граматика всех елементов---------------------------------------------------------
@@ -146,15 +148,15 @@ public class BookStoreTest extends TestBase {
         bookStoreElements.listOfBooksNameOnBookStorePage(bookName).click();
         bookStoreElements.waitForLoadingAddToYourCollectionAndClick();
 
-        bookStoreElements.alert(); // alert то есть на странице, то нету, то сайт виснет, то не хочет кликнуть на alert
+        wait = new Wait(app.driver);
+        wait.createAlert(); // alert то есть на странице, то нету, то сайт виснет, то не хочет кликнуть на alert
                                     // Но тест проходит и я выслал Скриншот в подтверждение, вот только проверил тест и он сработал
-        pause(1000);
+
         profilePage = new ProfilePage(app.driver);
         profilePage.goToProfilePage();
         profilePage.waitForLoadingAddedBooks();
-        pause(1000);
         profilePage.getTextOfAddedBook();
-        assertTrue(profilePage.getTextOfAddedBook().contains("Learning JavaScript Design Patterns"));
+        assertTrue(profilePage.getTextOfAddedBook().contains(bookName));
     }
 
 
@@ -185,7 +187,8 @@ public class BookStoreTest extends TestBase {
         profilePage = new ProfilePage(app.driver);
         profilePage.goToProfilePage();
         profilePage.waitForLoadingAddedBooks();
-        profilePage.listOfBooksInProfileIsEmpty();
-      //  assertTrue(profilePage.listOfBooksInProfileIsEmpty());
+
+        assertTrue(profilePage.checkProfileIsEmpty());
+        assertTrue(profilePage.listOfBooksInProfileIsEmpty());
     }
 }

@@ -2,12 +2,14 @@ package ui.pages.bookStorePage;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import ui.pages.PageBase;
 import ui.wait.Wait;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -194,8 +196,9 @@ public class BookStoreElements extends PageBase {
         wait = new Wait(driver);
         wait.setWait().until(ExpectedConditions.alertIsPresent());
         driver.switchTo().alert().accept();
-
     }
+
+
    /* public void alert() {
         wait = new Wait(driver);
         wait.setWait().until(ExpectedConditions.alertIsPresent());
