@@ -6,8 +6,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
-import ui.pages.PageBase;
 import ui.wait.Wait;
+
+import static java.lang.Thread.sleep;
 
 public class SelectPages extends PageBase {
     Wait wait;
@@ -29,6 +30,12 @@ public class SelectPages extends PageBase {
 
     @FindBy(id = "react-select-3-input")
     WebElement pickTitleElements;
+
+    @FindBy(xpath = "(//*[@class=' css-2b097c-container'])[3]")
+    WebElement mainMultiSelectElement;
+
+    @FindBy(id = "react-select-4-input")
+    WebElement multiSelectDropDown;
 
 
     public void goToSelectPage() {
@@ -59,11 +66,23 @@ public class SelectPages extends PageBase {
         select.selectByValue("audi");
     }
 
-    public void selectInSecond(String inputValue){
+    public void selectInSecond(String inputValue) {
         click(pickOneTitle);
         wait.forVisibility(pickTitleElements);
         pickTitleElements.sendKeys(inputValue);
         pickTitleElements.sendKeys(Keys.ENTER);
+    }
+
+    public void multiSelectDD(String inputValue)  {
+        click(mainMultiSelectElement);
+        fillField(multiSelectDropDown, inputValue);
+        pressKey(multiSelectDropDown, Keys.ENTER);
+    }
+
+    public void cleanInput() {
+       click(mainMultiSelectElement);
+       pressKey(multiSelectDropDown, Keys.valueOf(Keys.CONTROL + "a"));
+       pressKey(multiSelectDropDown,Keys.DELETE);
     }
 
 

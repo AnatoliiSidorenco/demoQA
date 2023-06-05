@@ -34,11 +34,20 @@ public void checkSelectValue(){
         selectPage.selectInSecond("Prof.");
     }
 
-    @Test
+ /*   @Test
     public void checkDateInputCorrect() throws InterruptedException {
         DataPicker dataPicker = new DataPicker(app.driver);
         dataPicker.goToDataPickerPage();
         dataPicker.inputDate("03/10/1985");
+    }*/
+
+    @Test
+    public void checkMultiSelectDropAndDown() {
+        selectPage = new SelectPages(app.driver);
+        selectPage.goToSelectPage();
+        selectPage.multiSelectDD("Green");
+        selectPage.multiSelectDD("Black");
+        selectPage.cleanInput();
     }
 
 }

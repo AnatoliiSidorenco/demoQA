@@ -1,5 +1,6 @@
 package ui.pages;
 
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
@@ -20,6 +21,10 @@ public class PageBase {
     public void fillField(WebElement field, String value) {
         click(field);
         field.clear();
+        field.sendKeys(value);
+    }
+
+    public void pressKey(WebElement field, Keys value) {
         field.sendKeys(value);
     }
 
